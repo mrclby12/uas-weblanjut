@@ -19,10 +19,12 @@
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
+        
+
 
             <li class="nav-item">
                 <a class="nav-link <?php echo (uri_string() == '') ? "" : "collapsed" ?>" href=".">
-                    <i class="bi bi-grid"></i>
+                    <i class="bi bi-house-door"></i>
                     <span>Home</span>
                 </a>
             </li><!-- End Home Nav -->
@@ -45,12 +47,25 @@
                 <?php
             }
             ?>
-               <li class="nav-item">
-                <a class="nav-link <?php echo (uri_string() == 'kontak') ? "" : "collapsed" ?>" href="kontak">
+            <li class="nav-item">
+                <a class="nav-link <?php echo (uri_string() == 'transkasi') ? "" : "collapsed" ?>" href="transaksi">
                     <i class="bi bi-envelope"></i>
-                    <span>Kontak</span>
+                    <span>Transaksi</span>
                 </a>
             </li>
+            
+            <?php
+            if (session()->get('role') == 'admin') {
+                ?>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo (uri_string() == 'dashboard') ? "" : "collapsed" ?>" href="dashboard">
+                        <i class="bi bi-grid"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <?php
+            }
+            ?>
         </ul>
 
     </aside><!-- End Sidebar-->

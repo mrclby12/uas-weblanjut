@@ -14,7 +14,6 @@
     <link href="<?= base_url('NiceAdmin/assets/vendor/simple-datatables/style.css') ?>" rel="stylesheet">
     <!-- Example tailwind styles -->
     <style>
-        /* Tailwind classes */
         .bg-gray-100 {
             background-color: #f7fafc;
         }
@@ -33,6 +32,22 @@
 
         .rounded-lg {
             border-radius: 0.5rem;
+        }
+
+        .btn-disabled {
+            background-color: #6c757d;
+
+            border-color: #6c757d;
+
+            color: #fff;
+
+            cursor: not-allowed;
+
+        }
+
+        .btn-disabled:hover {
+            background-color: #6c757d;
+            border-color: #6c757d;
         }
     </style>
 </head>
@@ -120,9 +135,24 @@ if (!empty($items)) {
                                     <div class="alert alert-info">
                                         Total Belanja: <?= number_format($total, 0, ',', '.') ?> IDR
                                     </div>
-                                    <a href="<?= base_url('keranjang/clear') ?>"
-                                        class="btn btn-danger mt-3">Kosongkan Keranjang</a>
-                                    <button type="submit" class="btn btn-primary mt-3">Perbarui Keranjang</button>
+
+                                    <div class="flex justify-between mt-3">
+                                        <div>
+
+                                            <a href="<?= base_url('keranjang/clear') ?>"
+                                                class="btn btn-danger">Kosongkan
+                                                Keranjang</a>
+                                            <button type="submit" class="btn btn-primary">Perbarui Keranjang</button>
+                                        </div>
+                                        <div>
+                                            <button type="button"
+                                                class="btn btn-success checkout-button <?= empty($items) ? 'btn-disabled' : '' ?>"
+                                                onclick="<?= empty($items) ? '' : 'window.location.href=\'' . base_url('checkout') . '\';' ?>">
+                                                Checkout
+                                            </button>
+                                        </div>
+                                    </div>
+
                                 </form>
                             </div>
                         </div>

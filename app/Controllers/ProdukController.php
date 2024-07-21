@@ -30,7 +30,7 @@ class ProdukController extends Controller
     {
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'nama' => 'required',
+            'nama' => 'required|min_length[6]',
             'harga' => 'required',
             'jumlah' => 'required|numeric',
             'foto' => 'uploaded[foto]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
@@ -67,15 +67,28 @@ class ProdukController extends Controller
 
     public function update()
     {
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'nama' => 'required|min_length[6]', // Aturan baru untuk minimal 6 karakter
+            'harga' => 'required',
+            'jumlah' => 'required|numeric',
+            'foto' => 'is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
 
         $id = intval($this->request->getPost('id'));
         $nama = $this->request->getPost('nama');
-        $harga = intval($this->request->getPost('harga'));
+        $harga = $this->request->getPost('harga');
         $jumlah = intval($this->request->getPost('jumlah'));
         $foto = $this->request->getFile('foto');
 
+        $hargaFormat = (int) preg_replace('/[^0-9]/', '', $harga);
 
-        if (empty($id) || empty($nama) || empty($harga) || empty($jumlah)) {
+        if (empty($id) || empty($nama) || empty($hargaFormat) || empty($jumlah)) {
             $errorMessage = 'Harap lengkapi ';
             if (empty($id)) {
                 $errorMessage .= 'ID, ';
@@ -92,13 +105,14 @@ class ProdukController extends Controller
 
             $errorMessage = rtrim($errorMessage, ', ') . '.';
             return redirect()->back()->withInput()->with('error', $errorMessage);
+
         }
 
 
         $model = new ProdukModel();
         $data = [
             'nama' => $nama,
-            'harga' => $harga,
+            'harga' => $hargaFormat,
             'jumlah' => $jumlah
         ];
 
@@ -110,7 +124,7 @@ class ProdukController extends Controller
         if ($foto->isValid() && !$foto->hasMoved()) {
 
             $newName = $foto->getRandomName();
-            $foto->move(ROOTPATH . 'public/img', $newName);
+            $foto->move('img', $newName);
 
 
             $data['foto'] = $newName;

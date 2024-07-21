@@ -53,7 +53,11 @@ class LoginController extends BaseController
             session()->set('username', $user['username']);
             session()->set('role', $user['role']);
 
-            return redirect()->to('/');
+            if ($user['role'] === 'admin') {
+                return redirect()->to('/dashboard');
+            } else {
+                return redirect()->to('/');
+            }
         } else {
 
             session()->setFlashdata('error', 'username atau password salah');
@@ -63,18 +67,18 @@ class LoginController extends BaseController
 
     public function logout()
     {
-    
+
         session()->remove(['isLoggedIn', 'username', 'role']);
-    
-   
-        if(isset($_COOKIE['ci_session'])) {
+
+
+        if (isset($_COOKIE['ci_session'])) {
             unset($_COOKIE['ci_session']);
             setcookie('ci_session', null, -1, '/');
         }
-    
+
         return redirect()->to('/login');
     }
-    
+
 
 
 }

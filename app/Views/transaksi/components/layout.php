@@ -46,7 +46,7 @@
     <!-- ======= Sidebar ======= -->
     <?= $this->include('/components/sidebar') ?>;
 
-    <?= $this->include('contact/components/main') ?>;
+    <?= $this->include('transaksi/components/main') ?>;
 
     <!-- ======= Footer ======= -->
 
@@ -67,6 +67,8 @@
     <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <?= $this->include('/components/header') ?>;
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>

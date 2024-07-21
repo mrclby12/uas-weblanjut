@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'hkks.shop',
+        'hostname'     => 'afyung.shop',
         'username'     => 'afyungs2_belajar',
         'password'     => 'uut123456',
         'database'     => 'afyungs2_belajar',

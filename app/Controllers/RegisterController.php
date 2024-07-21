@@ -50,6 +50,7 @@ class RegisterController extends BaseController
             'email' => $this->request->getPost('email'),
             'username' => $this->request->getPost('username'),
             'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'role' => 'user'
         ];
     
         if (!$userModel->insert($userData)) {
